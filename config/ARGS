@@ -1,0 +1,7 @@
+BASE_IMAGE_NAME=tuxdude/homelab-python-base
+BASE_IMAGE_TAG=master
+USER_NAME=glances
+GROUP_NAME=glances
+USER_ID=16019
+GROUP_ID=16019
+GLANCES_VERSION=v4.1.2.1
