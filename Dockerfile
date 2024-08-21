@@ -2,9 +2,13 @@
 
 ARG BASE_IMAGE_NAME
 ARG BASE_IMAGE_TAG
-FROM ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG}
+FROM ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG} AS with-scripts
 
 COPY scripts/start-glances.sh scripts/install-glances.sh /scripts/
+
+ARG BASE_IMAGE_NAME
+ARG BASE_IMAGE_TAG
+FROM ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG}
 
 SHELL ["/bin/bash", "-c"]
 
@@ -14,7 +18,7 @@ ARG USER_ID
 ARG GROUP_ID
 ARG GLANCES_VERSION
 
-RUN \
+RUN --mount=type=bind,target=/scripts,from=with-scripts,source=/scripts \
     set -E -e -o pipefail \
     # Install build dependencies. \
     && homelab install util-linux git \
@@ -35,9 +39,10 @@ RUN \
     && cp /opt/glances/conf/glances.conf /config/glances.conf \
     && chown -R ${USER_NAME:?}:${GROUP_NAME:?} /opt/glances/ /config \
     && su --login --shell /bin/bash --command "/scripts/install-glances.sh" ${USER_NAME:?} \
-    && ln -sf /scripts/start-glances.sh /opt/bin/start-glances \
+    # Copy the start-glances.sh script. \
+    && cp /scripts/start-glances.sh /opt/glances/ \
+    && ln -sf /opt/glances/start-glances.sh /opt/bin/start-glances \
     # Clean up. \
-    && rm /scripts/install-glances.sh \
     && homelab remove util-linux git \
     && homelab cleanup
 
