@@ -31,14 +31,16 @@ RUN --mount=type=bind,target=/scripts,from=with-scripts,source=/scripts \
         ${GROUP_ID:?} \
         --create-home-dir \
     # Download and install the release. \
-    && mkdir -p /opt/glances /config \
-    && git clone \
-        --quiet \
-        --depth 1 \
-        --branch ${GLANCES_VERSION:?} \
-        https://github.com/nicolargo/glances /opt/glances \
+    && homelab install-git-repo \
+        https://github.com/nicolargo/glances \
+        ${GLANCES_VERSION:?} \
+        glances \
+        glances-${GLANCES_VERSION:?} \
+        ${USER_NAME:?} \
+        ${GROUP_NAME:?} \
+    && mkdir -p /config \
     && cp /opt/glances/conf/glances.conf /config/glances.conf \
-    && chown -R ${USER_NAME:?}:${GROUP_NAME:?} /opt/glances/ /config \
+    && chown -R ${USER_NAME:?}:${GROUP_NAME:?} /config \
     && su --login --shell /bin/bash --command "/scripts/install-glances.sh" ${USER_NAME:?} \
     # Copy the start-glances.sh script. \
     && cp /scripts/start-glances.sh /opt/glances/ \
