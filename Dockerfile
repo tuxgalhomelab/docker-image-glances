@@ -53,12 +53,7 @@ EXPOSE 61208
 
 HEALTHCHECK \
     --start-period=15s --interval=30s --timeout=3s \
-    CMD curl \
-        --silent \
-        --fail \
-        --location \
-        --show-error \
-        http://localhost:61208/api/4/status
+    CMD homelab healthcheck-service http://localhost:61208/api/4/status
 
 ENV USER=${USER_NAME}
 USER ${USER_NAME}:${GROUP_NAME}
