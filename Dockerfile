@@ -20,6 +20,7 @@ ARG GLANCES_VERSION
 
 RUN --mount=type=bind,target=/scripts,from=with-scripts,source=/scripts \
     set -E -e -o pipefail \
+    && export HOMELAB_VERBOSE=y \
     # Install build dependencies. \
     && homelab install util-linux git \
     # Create the user and the group. \
