@@ -37,9 +37,9 @@ RUN --mount=type=bind,target=/scripts,from=with-scripts,source=/scripts \
         glances-${GLANCES_VERSION:?} \
         ${USER_NAME:?} \
         ${GROUP_NAME:?} \
-    && mkdir -p /config \
-    && cp /opt/glances/conf/glances.conf /config/glances.conf \
-    && chown -R ${USER_NAME:?}:${GROUP_NAME:?} /config \
+    && mkdir -p /data/glances/config \
+    && cp /opt/glances/conf/glances.conf /data/glances/config/glances.conf \
+    && chown -R ${USER_NAME:?}:${GROUP_NAME:?} /data/glances/config \
     && su --login --shell /bin/bash --command "/scripts/install-glances.sh" ${USER_NAME:?} \
     # Copy the start-glances.sh script. \
     && cp /scripts/start-glances.sh /opt/glances/ \

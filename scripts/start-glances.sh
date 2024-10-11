@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -E -e -o pipefail
 
-glances_config="/config/glances.conf"
+glances_config="/data/glances/config/glances.conf"
 
 set_umask() {
     # Configure umask to allow write permissions for the group by default
