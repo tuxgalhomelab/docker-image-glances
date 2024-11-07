@@ -1,4 +1,4 @@
-BASE_IMAGE_NAME=tuxdude/homelab-python-base
+BASE_IMAGE_NAME=tuxgal/homelab-python-base
 BASE_IMAGE_TAG=master
 USER_NAME=glances
 GROUP_NAME=glances
