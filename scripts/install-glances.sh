@@ -13,6 +13,8 @@ source bin/activate
 export PYTHONUNBUFFERED=1
 export PYTHONIOENCODING=UTF-8
 
-pip3 install \
-    -r requirements.txt \
-    -r webui-requirements.txt
+pip3 install uv
+
+make requirements-docker
+
+pip3 install -r docker-requirements.txt
