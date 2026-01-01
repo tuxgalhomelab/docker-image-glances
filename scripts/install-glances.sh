@@ -15,6 +15,6 @@ export PYTHONIOENCODING=UTF-8
 
 pip3 install uv
 
-make requirements-docker
+make requirements-all
 
-pip3 install -r docker-requirements.txt
+pip3 install -r all-requirements.txt
